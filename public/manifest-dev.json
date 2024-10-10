@@ -76,5 +76,17 @@
     "title": "Bilibili",
     "description": "Dive into Bilibili's vast content with features like keyword video search, replay access, interactive danmaku, trending video recommendations, and hot-search insights, all at your fingertips."
   },
+  "settings": {
+    "type": "object",
+    "required": ["RSSHUB_URL"],
+    "properties": {
+      "RSSHUB_URL": {
+        "title": "RSSHub Url",
+        "description": "we use [RSSHub](https://rsshub.app) as backend service | 该插件使用 RSSHub 作为搜索服务",
+        "type": "string",
+        "format": "password"
+      }
+    }
+  },
   "version": "1"
 }
