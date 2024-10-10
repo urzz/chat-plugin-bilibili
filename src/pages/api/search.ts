@@ -1,6 +1,11 @@
-import { PluginErrorType, createErrorResponse } from '@lobehub/chat-plugin-sdk';
+import {
+  PluginErrorType,
+  createErrorResponse,
+  getPluginSettingsFromRequest,
+} from '@lobehub/chat-plugin-sdk';
 
 import { fetchSearch } from '@/servers/fetchSearch';
+import { Settings } from '@/type';
 
 export const config = {
   runtime: 'edge',
@@ -11,7 +16,9 @@ export default async (req: Request) => {
 
   const { keywords } = (await req.json()) as { keywords: string };
 
-  const result = await fetchSearch(keywords);
+  const settings = getPluginSettingsFromRequest<Settings>(req);
+
+  const result = await fetchSearch(settings, keywords);
 
   return new Response(JSON.stringify(result));
 };

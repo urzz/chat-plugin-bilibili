@@ -1,5 +1,7 @@
 import { XMLParser } from 'fast-xml-parser';
 
+import { Settings } from '@/type';
+
 export interface SearchResultItem {
   author: string;
   authorID: number;
@@ -42,9 +44,13 @@ const parseInfoString = (inputString: string) => {
 
   return result;
 };
-export const fetchSearch = async (keywords: string): Promise<SearchResultItem[]> => {
+export const fetchSearch = async (
+  settings: Settings,
+  keywords: string,
+): Promise<SearchResultItem[]> => {
   const parser = new XMLParser();
-  const res = await fetch(`https://rsshub.app/bilibili/vsearch/${keywords}/totalrank/1`);
+  const rsshub_url = settings?.RSSHUB_URL ?? 'https://rsshub.app';
+  const res = await fetch(`${rsshub_url}/bilibili/vsearch/${keywords}/totalrank/1`);
   const XMLdata = await res.text();
   const jObj = parser.parse(XMLdata);
   const rss = jObj.rss.channel.item.map(({ title, description, link, author, guid }: any) => ({
